@@ -18,8 +18,8 @@ paths: {}
 components:
   schemas:
     CertifyingEntityName:
-        type: string
-        description: The signed name of signor (i.e., individual authorized to sign for name); if tax_classification = INDIVIDUAL, signature must equal name.
+      type: string
+      description: The signed name of signor (i.e., individual authorized to sign for name); if tax_classification = INDIVIDUAL, signature must equal name.
     ReferenceNumbers:
       type: string
       description: The legal name of the US or foreign “disregarded entity” (DRE) owner.
@@ -136,7 +136,6 @@ components:
         - ERROR
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxFormCertificationTimestamp:
-      pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
       type: string
       description: The date and time the form was signed.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -154,7 +153,7 @@ components:
           $ref: '#/components/schemas/FormType'
         status:
           $ref: '#/components/schemas/TaxFormStatus'
-        certificationTimestamp:
+        certifyingEntityTimeStamp:
           $ref: '#/components/schemas/TaxFormCertificationTimestamp'
         url:
           $ref: '#/components/schemas/TaxFormURL'
@@ -174,17 +173,16 @@ components:
           properties:
             formHashId:
               $ref: '#/components/schemas/FormHashId'
-          x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    W8BENResponse:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/W8BEN'
-        - type: object
-          required:
-            - formHashId
-          properties:
-            formHashId:
-              $ref: '#/components/schemas/FormHashId'
+            url:
+              $ref: '#/components/schemas/TaxFormURL'
+            status:
+              $ref: '#/components/schemas/TaxFormStatus'
+            tin:
+              $ref: '#/components/schemas/TinDetails'
+            address:
+              $ref: '#/components/schemas/Address'
+            name:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W8BENEResponse:
       type: object
@@ -196,25 +194,42 @@ components:
           properties:
             formHashId:
               $ref: '#/components/schemas/FormHashId'
+            url:
+              $ref: '#/components/schemas/TaxFormURL'
+            status:
+              $ref: '#/components/schemas/TaxFormStatus'
+            tin:
+              $ref: '#/components/schemas/Tin'
+            permanentAddress:
+              $ref: '#/components/schemas/Address'
+            name:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+            country:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    W8BENResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/W8BENEResponse'
+        - type: object
+          required:
+            - formHashId
+          properties:
+            dateOfBirth:
+              $ref: '#/components/schemas/BirthDate'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormInfo:
-      properties:
-        formHashId:
-          $ref: '#/components/schemas/FormHashId'
-        formStatus:
-          $ref: '#/components/schemas/TaxFormStatus'
-      allOf:
-        - $ref: '#/components/schemas/BaseFormDetails'
+      type: object
       oneOf:
-        - $ref: '#/components/schemas/W9'
-        - $ref: '#/components/schemas/W8BEN'
-        - $ref: '#/components/schemas/W8BENE'
+        - $ref: '#/components/schemas/W9Response'
+        - $ref: '#/components/schemas/W8BENResponse'
+        - $ref: '#/components/schemas/W8BENEResponse'
       discriminator:
         propertyName: formType
         mapping:
-          W-9: '#/components/schemas/W9'
-          W-8BEN: '#/components/schemas/W8BEN'
-          W-8BEN-E: '#/components/schemas/W8BENE'
+          W-9: '#/components/schemas/W9Response'
+          W-8BEN: '#/components/schemas/W8BENResponse'
+          W-8BEN-E: '#/components/schemas/W8BENEResponse'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormDetails:
       oneOf:
@@ -307,7 +322,6 @@ components:
     W8BEN:
       type: object
       allOf:
-        - $ref: '#/components/schemas/BaseFormDetails'
         - $ref: '#/components/schemas/W8BENE'
         - type: object
           properties:
@@ -374,12 +388,12 @@ components:
         - $ref: '#/components/schemas/BaseFilerInfo'
         - type: object
           required:
-            - filerId
+            - filerHashId
             - tin
             - paymentSettlementEntity
             - contact
           properties:
-            filerId:
+            filerHashId:
               $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
             tin:
               $ref: '#/components/schemas/TinDetails'
@@ -520,8 +534,10 @@ components:
           $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
-        address:
-          $ref: '#/components/schemas/Address'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
         deliveryPreference:
           $ref: '#/components/schemas/DeliveryPreference'
         status:
@@ -560,7 +576,7 @@ components:
     BirthDate:
       type: string
       example: 1980-01-01
-      pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      pattern: "^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(19|20)\\d{2}$"
       description: Date of birth in ISO-8601 format.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TinDetails:
@@ -577,19 +593,11 @@ components:
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     Tin:
       type: string
-      description: Taxpayer Identification Number (TIN).
+      description: Taxpayer Identification Number (TIN) or a masked TIN.
       minLength: 9
       maxLength: 9
-      pattern: "^[0-9]+$"
-      example: "123456789"
-      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    MaskedTin:
-      type: string
-      description: A masked Taxpayer Identification Number (TIN).
-      minLength: 9
-      maxLength: 9
-      pattern: "^\\*{5}[0-9]{4}$"
-      example: "*****6789"
+      pattern: "^(\\*{5}[0-9]{4}|[0-9]{9})$"
+      example: "123456789 or *****6789"
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TinType:
       type: string
@@ -613,6 +621,30 @@ components:
           US: '#/components/schemas/USPayerDetails'
       oneOf:
         - $ref: '#/components/schemas/USPayerDetails'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    CreatePayerAndSubmitFormRequest:
+      type: object
+      description: A request body to add a taxpayer to a Nium client and submit a tax form.
+      required:
+        - payer
+        - form
+      properties:
+        payer:
+          $ref: '#/components/schemas/CreatePayerRequest'
+        form:
+          $ref: '#/components/schemas/FormDetails'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    PayerAndFormInfo:
+      type: object
+      description: A tax payer and submitted form information.
+      required:
+        - payer
+        - form
+      properties:
+        payer:
+          $ref: '#/components/schemas/PayerInfo'
+        form:
+          $ref: '#/components/schemas/FormInfo'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     UpdatePayerRequest:
       type: object
@@ -696,8 +728,8 @@ components:
       type: object
       description: Information about the Taxpayer Identification Number (TIN).
       properties:
-        tin:
-          $ref: '#/components/schemas/MaskedTin'
+        number:
+          $ref: '#/components/schemas/Tin'
         tinType:
           $ref: '#/components/schemas/TinType'
         verificationStatus:
@@ -769,22 +801,28 @@ components:
         residenceCountryCode:
           $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    RecommendedTaxForm:
+      type: boolean
+      description: A recommended tax form.
     SelectTaxFormResponse:
-      type: object
-      description: A selected tax form information.
-      allOf:
-        - $ref: '#/components/schemas/SelectTaxFormBase'
-        - required:
-            - taxForm
-            - description
-          type: object
-          description: A tax form and its information.
-          properties:
-            taxForm:
-              $ref: '#/components/schemas/TaxFormType'
-            description:
-              $ref: '#/components/schemas/TaxFormDescription'
-          x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+      type: array
+      description: A list of selected tax form information.
+      items:
+        allOf:
+          - $ref: '#/components/schemas/SelectTaxFormBase'
+          - type: object
+            required:
+              - taxForm
+              - description
+            description: A tax form and its information.
+            properties:
+              taxForm:
+                $ref: '#/components/schemas/TaxFormType'
+              description:
+                $ref: '#/components/schemas/TaxFormDescription'
+              recommended:
+                $ref: '#/components/schemas/RecommendedTaxForm'
+            x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxFormDescription:
       type: string
       description: A description for a given tax form type.
@@ -793,10 +831,128 @@ components:
       type: string
       description: A tax form type.
       enum:
-        - W9
+        - W-9
         - W-8BEN
         - W-8BEN-E
+      x-enum-varnames:
+        - W_9
+        - W_8BEN
+        - W_8BEN_E
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    DeleteReason:
+      type: string
+      description: A delete reason.
+      enum:
+        - CLOSED
+        - INACTIVE
+        - FRAUDULENT
+    FilerData:
+      type: object
+      discriminator:
+        propertyName: taxResidentCountryCode
+        mapping:
+          US: '#/components/schemas/USFilerData'
+      oneOf:
+        - $ref: '#/components/schemas/USFilerData'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    BaseFilerData:
+      type: object
+      required:
+        - taxResidentCountryCode
+        - name
+        - address
+      properties:
+        taxResidentCountryCode:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        name:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        address:
+          $ref: '#/components/schemas/Address'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    USFilerData:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseFilerData'
+        - type: object
+          required:
+            - tin
+            - paymentSettlementEntity
+            - contact
+          properties:
+            tin:
+              $ref: '#/components/schemas/Tin'
+            contact:
+              $ref: '#/components/schemas/USFilerContactInfo'
+            paymentSettlementEntity:
+              type: string
+              description: Payment Settlement Entity or Electronic Payment Facilitator(EPF).
+            paymentCardThirdPartyNetwork:
+              type: string
+              description: Payment card or Third party network (1099-K).
+            pseName:
+              type: string
+              description: Payment settlement entity (PSE) Name (1099-K).
+            pseTelephoneNumber:
+              type: string
+              description: Payment settlement entity (PSE) Telephone Number (1099-K).
+            usTaxId:
+              type: string
+              description: US Tax ID (1042-S).
+            tinType:
+              $ref: '#/components/schemas/TinType'
+            giin:
+              type: string
+              description: Global Intermediary Identification Number (GIIN) (1042-S).
+            ch3Status:
+              type: string
+              description: Ch.3 Status (1042-S).
+            ch4Status:
+              type: string
+              description: Ch.4 Status (1042-S).
+          description: A US filer information.
+          x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    PayerData:
+      type: object
+      discriminator:
+        propertyName: taxResidentCountryCode
+        mapping:
+          US: '#/components/schemas/USPayerData'
+      oneOf:
+        - $ref: '#/components/schemas/USPayerData'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    BasePayerData:
+      required:
+        - taxResidentCountryCode
+        - communicationPreference
+        - addresses
+        - deliveryPreference
+        - taxExempt
+      type: object
+      properties:
+        taxResidentCountryCode:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        communicationPreference:
+          $ref: '#/components/schemas/CommunicationPreference'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        deliveryPreference:
+          $ref: '#/components/schemas/DeliveryPreference'
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    USPayerData:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BasePayerData'
+        - required:
+            - taxExempt
+          type: object
+          properties:
+            tinType:
+              $ref: '#/components/schemas/TinType'
+            taxExempt:
+              $ref: '#/components/schemas/TaxExempt'
+          x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     CursorPagination:
       $ref: 'https://raw.githubusercontent.com/nium-global/nium-openapi/main/pagination.yaml#/components/schemas/Pagination'
     ErrorCodes400:
@@ -808,20 +964,20 @@ components:
         * `invalid_entity_type`: The entity type is invalid. The valid values can either be 'BUSINESS' or 'INDIVIDUAL'.
         * `invalid_name`: The name is invalid. It must be at most 255 characters long.
         * `invalid_email`: The email is invalid. It must be a valid email address.
-        * `invalid_tax_country_code`: The tax country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_tax_residence_country_code`: The tax country code is invalid. It must be a valid 2 letter ISO country code. Valid values are 'US'.
         * `invalid_communication_preference`: The communication preference is invalid. The valid value is either PHONE or EMAIL.
-        * `invalid_open_date`: The open date is invalid. It must be in ISO-8601 format.
         * `invalid_address_type`: The address type is invalid. The valid values can either be 'MAILING' or 'RESIDENCE'.
         * `invalid_address_line1`: The address line 1 is invalid. It must be at most 255 characters long.
+        * `invalid_address_line2`: The address line 2 is invalid. It must be at most 255 characters long.
         * `invalid_address_city`: The address city is invalid. It must be at most 255 characters long.
         * `invalid_address_state`: The address state is invalid. It must be a valid state or region code.
         * `invalid_address_postal_code`: The address postal code is invalid. It must be at most 15 characters long and numeric.
         * `invalid_address_country`: The address country code is invalid. It must be a valid 2 letter ISO country code.
         * `invalid_delivery_preference`: The delivery preference is invalid. The valid value is either MAIL or ELECTRONIC.
-        * `invalid_tin`: The TIN is invalid. It must be a 9-digit numeric string.
+        * `invalid_tin`: The TIN is invalid. It must contain a 9-digit numeric string and a valid tin type.
+        * `invalid_tin_number`: The TIN number is invalid. It must be a 9-digit numeric string.
         * `invalid_tin_type`: The TIN type is invalid. The valid values are SSN, EIN, or ITIN.
         * `invalid_account_type`: The account type is invalid. The valid values are INDIVIDUAL, JOINT, CORPORATE, TRUST, PARTNERSHIP, or OTHER.
-        * `invalid_year_end_fair_market_value`: The year-end fair market value is invalid. It must be a valid number.
         * `invalid_tax_exempt`: The tax exempt value is invalid. It must be a boolean.
         * `invalid_status`: The status is invalid. The valid values are ACTIVE, INACTIVE, CLOSED, or FRAUDULENT.
         * `invalid_dba_name`: The DBA name is invalid. It must be at most 255 characters long.
@@ -831,22 +987,42 @@ components:
         * `invalid_is_not_subject_backup_withholding`: The backup withholding status is invalid. It must be a boolean.
         * `invalid_date_of_birth`: The date of birth is invalid. It must be in ISO-8601 format.
         * `invalid_reference_numbers`: The reference numbers are invalid. They must be valid strings.
-        * `invalid_country`: The country code is invalid. It must be a valid 2 letter ISO country code.
-        * `invalid_permanent_address`: The permanent address is invalid. It must match the specified format.
+        * `invalid_country_code`: The country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_filer_country_code`: The filer country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_residence_country_code`: The residence country code is invalid. It must be a valid 2 letter ISO country code.
         * `invalid_mailing_address`: The mailing address is invalid. It must match the specified format.
         * `invalid_ftin`: The FTIN is invalid. It must be a valid string.
         * `invalid_ftin_not_legally_required`: The FTIN not legally required field is invalid. It must be a boolean.
+        * `invalid_starting_after`: The starting after value is invalid. It must be a valid UUID.
+        * `invalid_starting_after_or_ending_before`: Only one of startingAfter or endingBefore can be provided.
+        * `invalid_ending_before`: The ending before value is invalid. It must be a valid UUID.
+        * `invalid_update_tax_residence_country_code`: The tax residence country code cannot be changed.
+        * `invalid_form_type`: The form type is invalid. The valid values are W-9, W-8BEN, or W-8BEN-E.
         * `required_residence_address`: A RESIDENCE address is required.
+        * `invalid_tax_classification`: The tax classification is invalid. The valid values are INDIVIDUAL, CORPORATION, PARTNERSHIP, TRUST, or OTHER.
+        * `invalid_delete_reason`: The delete reason is invalid. The valid values are CLOSED, INACTIVE, or FRAUDULENT.
+        * `too_many_query_parameters`: Too many query parameters. Results can only be filtered by 1 field.
+        * `invalid_uuid`: The parameter is invalid. It must be a valid UUID.
+        * `invalid_boolean_value`: The input value is invalid. It must be a valid boolean of true or false.
+        * `invalid_contact_number`: The contact number is invalid. It must be at most 17 digits long and begin with a +.
+        * `invalid_customer_hash_id`: The customer hash ID is invalid. It must be a valid UUID.
+        * `invalid_filer_hash_id`: The filer hash ID is invalid. It must be a valid UUID.
+        * `invalid_has_certified`: The hasCertified field is invalid. It must be a boolean.
+        * `invalid_certifying_entity_name`: The certifying entity name does not match payer's name. It must be at most 255 characters long.
+        * `invalid_certifying_entity_time_stamp`: The certifying entity time stamp is invalid. It must be in ISO-8601 format.
+        * `invalid_payment_settlement_entity`: The payment settlement entity is invalid. It must be a valid string.
+        * `invalid_payer_entity`: The payer entity is invalid. It must contain a valid type and residence country code.
+        * `unsupported_form_type`: The tax form type is not supported. The valid values are W-9, W-8BEN, or W-8BEN-E
       enum:
         - constraint_violated_input
         - invalid_entity_type
         - invalid_name
         - invalid_email
-        - invalid_tax_country_code
+        - invalid_tax_residence_country_code
         - invalid_communication_preference
-        - invalid_open_date
         - invalid_address_type
         - invalid_address_line1
+        - invalid_address_line2
         - invalid_address_city
         - invalid_address_state
         - invalid_address_postal_code
@@ -854,9 +1030,9 @@ components:
         - invalid_delivery_preference
         - invalid_birth_date
         - invalid_tin
+        - invalid_tin_number
         - invalid_tin_type
         - invalid_account_type
-        - invalid_year_end_fair_market_value
         - invalid_tax_exempt
         - invalid_status
         - invalid_dba_name
@@ -866,12 +1042,32 @@ components:
         - invalid_is_not_subject_backup_withholding
         - invalid_date_of_birth
         - invalid_reference_numbers
-        - invalid_country
-        - invalid_permanent_address
+        - invalid_country_code
+        - invalid_filer_country_code
+        - invalid_residence_country_code
         - invalid_mailing_address
         - invalid_ftin
         - invalid_ftin_not_legally_required
+        - invalid_starting_after
+        - invalid_starting_after_or_ending_before
+        - invalid_update_tax_residence_country_code
+        - invalid_ending_before
+        - invalid_form_type
+        - invalid_tax_classification
+        - invalid_delete_reason
         - required_residence_address
+        - too_many_query_parameters
+        - invalid_uuid
+        - invalid_boolean_value
+        - invalid_contact_number
+        - invalid_customer_hash_id
+        - invalid_filer_hash_id
+        - invalid_has_certified
+        - invalid_certifying_entity_name
+        - invalid_certifying_entity_timestamp
+        - invalid_payment_settlement_entity
+        - invalid_payer_entity
+        - unsupported_form_type
     ErrorCodes404:
       type: string
       description: |
@@ -905,20 +1101,49 @@ components:
         - uncategorized_error
         - internal_error
   parameters:
-    UnmaskTin:
-      name: unmaskTin
+    taxResidentCountryCode:
+      name: payerResidentCountryCode
+      in: query
+      required: true
+      description: The tax resident country code.
+      schema:
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+    filerCountryCode:
+      name: filerCountryCode
+      in: query
+      required: true
+      description: The filer country code.
+      schema:
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+    payerEntityType:
+      name: entityType
       in: query
       required: false
-      description: Unmask the TIN in the response
+      description: The entity type of the payer.
+      schema:
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+    UnmaskData:
+      name: unmaskData
+      in: query
+      required: false
+      description: Unmask the data in the response
       schema:
         type: boolean
+        default: false
     FormHashId:
       name: formHashId
       in: path
       required: true
       schema:
-        type: string
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
       description: Unique identifier of the tax Form.
+    ClientHashId:
+      name: clientHashId
+      in: path
+      required: true
+      description: Unique identifier of the client.
+      schema:
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     PayerHashId:
       name: payerHashId
       in: path
@@ -968,8 +1193,14 @@ components:
       description: Reason for deleting the taxpayer.
       required: true
       schema:
-        type: string
-        enum:
-          - CLOSED
-          - INACTIVE
-          - FRAUDULENT
+        $ref: '#/components/schemas/DeleteReason'
+    Limit:
+      name: limit
+      in: query
+      description: The number of items to be returned on each page.
+      required: false
+      schema:
+        maximum: 50
+        minimum: 1
+        type: integer
+        default: 10
