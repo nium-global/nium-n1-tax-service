@@ -266,6 +266,7 @@ components:
     Address:
       title: Address
       required:
+        - type
         - city
         - countryCode
         - line1
