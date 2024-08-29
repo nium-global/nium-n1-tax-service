@@ -180,7 +180,7 @@ components:
             tin:
               $ref: '#/components/schemas/TinDetails'
             address:
-              $ref: '#/components/schemas/Address'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/514673ddb89af3b05be60c35d33da4c52d0b21ea/core.yaml#/components/schemas/Address'
             name:
               $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -201,7 +201,7 @@ components:
             tin:
               $ref: '#/components/schemas/Tin'
             permanentAddress:
-              $ref: '#/components/schemas/Address'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/514673ddb89af3b05be60c35d33da4c52d0b21ea/core.yaml#/components/schemas/Address'
             name:
               $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
             country:
@@ -263,44 +263,6 @@ components:
         - certifyingEntityName
         - certifyingEntityTimeStamp
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    Address:
-      title: Address
-      required:
-        - type
-        - city
-        - countryCode
-        - line1
-        - postalCode
-        - state
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/AddressType'
-        line1:
-          type: string
-          maxLength: 255
-        line2:
-          type: string
-          maxLength: 255
-        city:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressCity'
-        state:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressState'
-        countryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
-        postalCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/PostalCode'
-      description: An address details.
-      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    AddressType:
-      title: AddressType
-      type: string
-      description: A possible address type
-      default: RESIDENCE
-      enum:
-        - MAILING
-        - RESIDENCE
-      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W9:
       type: object
       allOf:
@@ -339,7 +301,7 @@ components:
             referenceNumbers:
               $ref: '#/components/schemas/ReferenceNumbers'
             mailingAddress:
-              $ref: '#/components/schemas/Address'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/514673ddb89af3b05be60c35d33da4c52d0b21ea/core.yaml#/components/schemas/Address'
             ftin:
               $ref: '#/components/schemas/Ftin'
             ftinNotLegallyRequired:
@@ -379,7 +341,7 @@ components:
         name:
           $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/514673ddb89af3b05be60c35d33da4c52d0b21ea/core.yaml#/components/schemas/Address'
         customerHashId:
           $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -868,7 +830,7 @@ components:
         name:
           $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/514673ddb89af3b05be60c35d33da4c52d0b21ea/core.yaml#/components/schemas/Address'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     USFilerData:
       type: object
