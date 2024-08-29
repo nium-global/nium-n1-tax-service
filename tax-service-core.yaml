@@ -126,7 +126,7 @@ components:
       example: true
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormHashId:
-      $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+      $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     TaxFormStatus:
       type: string
       description: The Tax form generation status
@@ -182,7 +182,7 @@ components:
             address:
               $ref: '#/components/schemas/Address'
             name:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W8BENEResponse:
       type: object
@@ -203,9 +203,9 @@ components:
             permanentAddress:
               $ref: '#/components/schemas/Address'
             name:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
             country:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W8BENResponse:
       type: object
@@ -283,13 +283,13 @@ components:
           type: string
           maxLength: 255
         city:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressCity'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/AddressCity'
         state:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressState'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/AddressState'
         countryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         postalCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/PostalCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/PostalCode'
       description: An address details.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     AddressType:
@@ -308,7 +308,7 @@ components:
         - type: object
           properties:
             dbaName:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
             otherTaxClassification:
               $ref: '#/components/schemas/OtherTaxClassification'
             exemptPayeeCode:
@@ -375,13 +375,13 @@ components:
         - customerHashId
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         address:
           $ref: '#/components/schemas/Address'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     USFilerInfo:
       type: object
@@ -395,7 +395,7 @@ components:
             - contact
           properties:
             filerHashId:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
             tin:
               $ref: '#/components/schemas/TinDetails'
             contact:
@@ -434,7 +434,7 @@ components:
         contactNumber:
           $ref: '#/components/schemas/ContactNumberDetails'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         departmentTitle:
           $ref: '#/components/schemas/DepartmentTitle'
       description: A US filer contact information.
@@ -454,7 +454,7 @@ components:
         number:
           $ref: '#/components/schemas/ContactNumberWithoutCountryCode'
         countryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
       description: A contact number details.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     ContactNumberWithoutCountryCode:
@@ -477,13 +477,13 @@ components:
       type: object
       properties:
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -493,9 +493,9 @@ components:
         deliveryPreference:
           $ref: '#/components/schemas/DeliveryPreference'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     USPayerDetails:
       description: A US taxpayer details
@@ -526,13 +526,13 @@ components:
       type: object
       properties:
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -544,7 +544,7 @@ components:
         status:
           $ref: '#/components/schemas/UpdatePayerStatus'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormType:
       type: string
@@ -681,15 +681,15 @@ components:
       type: object
       properties:
         id:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -699,9 +699,9 @@ components:
         deliveryPreference:
           $ref: '#/components/schemas/DeliveryPreference'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     USPayerInfo:
       type: object
       allOf:
@@ -773,7 +773,7 @@ components:
       type: object
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     SelectUSTaxFormRequest:
       type: object
@@ -786,7 +786,7 @@ components:
           description: A US tax form selection details.
           properties:
             filerCountryCode:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
             payerEntity:
               $ref: '#/components/schemas/PayerEntityDetails'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -798,9 +798,9 @@ components:
       description: A taxpayer entity details.
       properties:
         type:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
         residenceCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     RecommendedTaxForm:
       type: boolean
@@ -864,9 +864,9 @@ components:
         - address
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
         address:
           $ref: '#/components/schemas/Address'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -931,7 +931,7 @@ components:
       type: object
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -1108,21 +1108,21 @@ components:
       required: true
       description: The tax resident country code.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
     filerCountryCode:
       name: filerCountryCode
       in: query
       required: true
       description: The filer country code.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
     payerEntityType:
       name: entityType
       in: query
       required: false
       description: The entity type of the payer.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
     UnmaskData:
       name: unmaskData
       in: query
@@ -1136,7 +1136,7 @@ components:
       in: path
       required: true
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
       description: Unique identifier of the tax Form.
     ClientHashId:
       name: clientHashId
@@ -1144,14 +1144,14 @@ components:
       required: true
       description: Unique identifier of the client.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     PayerHashId:
       name: payerHashId
       in: path
       required: true
       description: Unique identifier of the taxpayer.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     XRequestId:
       $ref: https://raw.githubusercontent.com/nium-global/nium-openapi/main/core.yaml#/components/parameters/XRequestId
     StartingAfter:
@@ -1163,31 +1163,31 @@ components:
       in: query
       description: Search taxpayers by name.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
     QueryByEmail:
       name: email
       in: query
       description: Search taxpayers by email.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
     QueryByContactNumber:
       name: contactNumber
       in: query
       description: Search taxpayers by contact number.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
     QueryByClientHashId:
       name: clientHashId
       in: query
       description: Search by client hash id.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     QueryByCustomerHashId:
       name: customerHashId
       in: query
       description: Search by customer hash id.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
     Reason:
       name: reason
       in: query
