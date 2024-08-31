@@ -663,8 +663,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us
-          : '#/components/schemas/USPayerInfo'
+          us: '#/components/schemas/USPayerInfo'
       oneOf:
         - $ref: '#/components/schemas/USPayerInfo'
     BasePayerInfo:
