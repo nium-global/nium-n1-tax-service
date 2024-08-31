@@ -352,7 +352,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/USFilerInfo'
+          us: '#/components/schemas/USFilerInfo'
       oneOf:
         - $ref: '#/components/schemas/USFilerInfo'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -619,7 +619,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/USPayerDetails'
+          us: '#/components/schemas/USPayerDetails'
       oneOf:
         - $ref: '#/components/schemas/USPayerDetails'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -653,7 +653,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/UpdateUSPayerDetails'
+          us: '#/components/schemas/UpdateUSPayerDetails'
       oneOf:
         - $ref: '#/components/schemas/UpdateUSPayerDetails'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -663,7 +663,8 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/USPayerInfo'
+          us
+          : '#/components/schemas/USPayerInfo'
       oneOf:
         - $ref: '#/components/schemas/USPayerInfo'
     BasePayerInfo:
@@ -763,7 +764,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/SelectUSTaxFormRequest'
+          us: '#/components/schemas/SelectUSTaxFormRequest'
       oneOf:
         - $ref: '#/components/schemas/SelectUSTaxFormRequest'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -852,7 +853,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/USFilerData'
+          us: '#/components/schemas/USFilerData'
       oneOf:
         - $ref: '#/components/schemas/USFilerData'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -917,7 +918,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          US: '#/components/schemas/USPayerData'
+          us: '#/components/schemas/USPayerData'
       oneOf:
         - $ref: '#/components/schemas/USPayerData'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
