@@ -31,17 +31,17 @@ components:
       description: |
         The code used to identify payees who are exempt from backup withholding.
 
-        * `1`: An organization exempt from tax under section 501(a), any IRA, or a custodial account under section 403(b)(7).
+        * `1`: An organization exempt from tax under section 501(a), any IRA, or a custodial account under section 403(b)(7) if the account satisfies the requirements of section 401(f)(2).
         * `2`: The United States or any of its agencies or instrumentalities.
-        * `3`: A state, the District of Columbia, a possession of the United States, or any of their political subdivisions.
+        * `3`: A state, the District of Columbia, a U.S. commonwealth or territory, or any of their political subdivisions or instrumentalities.
         * `4`: A foreign government or any of its political subdivisions, agencies, or instrumentalities.
         * `5`: A corporation.
-        * `6`: A dealer in securities or commodities required to register in the United States, the District of Columbia, or a possession of the United States.
+        * `6`: A dealer in securities or commodities required to register in the United States, the District of Columbia, or a U.S. commonwealth or territory.
         * `7`: A futures commission merchant registered with the Commodity Futures Trading Commission.
         * `8`: A real estate investment trust.
         * `9`: An entity registered at all times during the tax year under the Investment Company Act of 1940.
         * `10`: A common trust fund operated by a bank under section 584(a).
-        * `11`: A financial institution.
+        * `11`: A financial institution as defined under section 581.
         * `12`: A middleman known in the investment community as a nominee or custodian.
         * `13`: A trust exempt from tax under section 664 or described in section 4947.
       enum:
@@ -63,20 +63,52 @@ components:
       type: string
       description: |
         The code used to identify payees who are exempt from FATCA reporting.
-
-        * `A`: Individual is a U.S. citizen.
-        * `B`: Individual is a U.S. resident alien.
-        * `C`: Individual is a non-U.S. entity with substantial U.S. owners.
-        * `D`: Individual is a non-U.S. entity with no substantial U.S. owners.
-        * `E`: Individual is an entity acting as an intermediary.
-        * `F`: Individual is an entity acting as a non-participating foreign financial institution (FFI).
-        * `G`: Individual is an entity acting as a participating foreign financial institution (FFI).
-        * `H`: Individual is an entity acting as a deemed-compliant FFI.
-        * `I`: Individual is an entity acting as an exempt beneficial owner.
-        * `J`: Individual is an entity acting as an active non-financial foreign entity (NFFE).
-        * `K`: Individual is an entity acting as a passive NFFE.
-        * `L`: Reserved for future use.
-        * `M`: Reserved for future use.
+        * `a`: An organization exempt from tax under section 501(a) or any individual retirement plan as defined in section 7701(a)(37).
+        * `b`: The United States or any of its agencies or instrumentalities.
+        * `c`: A state, the District of Columbia, a U.S. commonwealth or territory, or any of their political subdivisions or instrumentalities.
+        * `d`: A corporation the stock of which is regularly traded on one or more established securities markets, as described in Regulations section 1.1472-1(c)(1)(i).
+        * `e`: A corporation that is a member of the same expanded affiliated group as a corporation described in Regulations section 1.1472-1(c)(1)(i).
+        * `f`: A dealer in securities, commodities, or derivative financial instruments (including notional principal contracts, futures, forwards, and options) that is registered as such under the laws of the United States or any state.
+        * `g`: A real estate investment trust.
+        * `h`: A regulated investment company as defined in section 851 or an entity registered at all times during the tax year under the Investment Company Act of 1940.
+        * `i`: A common trust fund as defined in section 584(a).
+        * `j`: A bank as defined in section 581.
+        * `k`: A broker.
+        * `l`: A trust exempt from tax under section 664 or described in section 4947(a)(1).
+        * `m`: A tax-exempt trust under a section 403(b) plan or section 457(g) plan.
+      enum:
+        - a
+        - b
+        - c
+        - d
+        - e
+        - f
+        - g
+        - h
+        - i
+        - j
+        - k
+        - l
+        - m
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    TaxBitExemptFatcaCode:
+      type: string
+      description: |
+        The code used to identify payees who are exempt from FATCA reporting.
+  
+        * `A`: An organization exempt from tax under section 501(a) or any individual retirement plan as defined in section 7701(a)(37).
+        * `B`: The United States or any of its agencies or instrumentalities.
+        * `C`: A state, the District of Columbia, a U.S. commonwealth or territory, or any of their political subdivisions or instrumentalities.
+        * `D`: A corporation the stock of which is regularly traded on one or more established securities markets, as described in Regulations section 1.1472-1(c)(1)(i).
+        * `E`: A corporation that is a member of the same expanded affiliated group as a corporation described in Regulations section 1.1472-1(c)(1)(i).
+        * `F`: A dealer in securities, commodities, or derivative financial instruments (including notional principal contracts, futures, forwards, and options) that is registered as such under the laws of the United States or any state.
+        * `G`: A real estate investment trust.
+        * `H`: A regulated investment company as defined in section 851 or an entity registered at all times during the tax year under the Investment Company Act of 1940.
+        * `I`: A common trust fund as defined in section 584(a).
+        * `J`: A bank as defined in section 581.
+        * `K`: A broker.
+        * `L`: A trust exempt from tax under section 664 or described in section 4947(a)(1).
+        * `M`: A tax-exempt trust under a section 403(b) plan or section 457(g) plan.
       enum:
         - A
         - B
@@ -95,7 +127,7 @@ components:
     TaxFormCertification:
       type: boolean
       description: The user has certified under penalties of perjury all necessary certifications
-      default: true
+      default: false
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     IsNotSubjectBackupWithholding:
       type: boolean
@@ -103,6 +135,20 @@ components:
       default: true
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxClassification:
+      type: string
+      description: The federal tax classification of name
+      enum:
+        - individual
+        - c_corporation
+        - s_corporation
+        - partnership
+        - trust_estate
+        - llc_c
+        - llc_p
+        - llc_s
+        - other
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    TaxBitTaxClassification:
       type: string
       enum:
         - INDIVIDUAL
@@ -126,14 +172,14 @@ components:
       example: true
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormHashId:
-      $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+      $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     TaxFormStatus:
       type: string
       description: The Tax form generation status
       enum:
-        - PROCESSING
-        - READY
-        - ERROR
+        - processing
+        - ready
+        - error
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxFormCertificationTimestamp:
       type: string
@@ -153,7 +199,7 @@ components:
           $ref: '#/components/schemas/FormType'
         status:
           $ref: '#/components/schemas/TaxFormStatus'
-        certifyingEntityTimeStamp:
+        certificationDate:
           $ref: '#/components/schemas/TaxFormCertificationTimestamp'
         url:
           $ref: '#/components/schemas/TaxFormURL'
@@ -182,7 +228,7 @@ components:
             address:
               $ref: '#/components/schemas/Address'
             name:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W8BENEResponse:
       type: object
@@ -203,9 +249,9 @@ components:
             permanentAddress:
               $ref: '#/components/schemas/Address'
             name:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
             country:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W8BENResponse:
       type: object
@@ -227,9 +273,9 @@ components:
       discriminator:
         propertyName: formType
         mapping:
-          W-9: '#/components/schemas/W9Response'
-          W-8BEN: '#/components/schemas/W8BENResponse'
-          W-8BEN-E: '#/components/schemas/W8BENEResponse'
+          w_9: '#/components/schemas/W9Response'
+          w_8ben: '#/components/schemas/W8BENResponse'
+          w_8ben_e: '#/components/schemas/W8BENEResponse'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormDetails:
       oneOf:
@@ -239,9 +285,9 @@ components:
       discriminator:
         propertyName: formType
         mapping:
-          W-9: '#/components/schemas/W9'
-          W-8BEN: '#/components/schemas/W8BEN'
-          W-8BEN-E: '#/components/schemas/W8BENE'
+          w_9: '#/components/schemas/W9'
+          w_8ben: '#/components/schemas/W8BEN'
+          w_8ben_e: '#/components/schemas/W8BENE'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     BaseFormDetails:
       type: object
@@ -254,14 +300,14 @@ components:
           $ref: '#/components/schemas/TaxFormCertification'
         certifyingEntityName:
           $ref: '#/components/schemas/CertifyingEntityName'
-        certifyingEntityTimeStamp:
+        certificationDate:
           $ref: '#/components/schemas/TaxFormCertificationTimestamp'
       required:
         - formType
         - taxClassification
         - hasCertified
         - certifyingEntityName
-        - certifyingEntityTimeStamp
+        - certificationDate
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     Address:
       title: Address
@@ -283,23 +329,28 @@ components:
           type: string
           maxLength: 255
         city:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/AddressCity'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressCity'
         state:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/AddressState'
+          $ref: '#/components/schemas/AddressState'
         countryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         postalCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/PostalCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/PostalCode'
       description: An address details.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    AddressState:
+      pattern: "^[A-Z]{2}$"
+      type: string
+      description: A 2-letter ISO state code.
+      example: CA
     AddressType:
       title: AddressType
       type: string
       description: A possible address type
-      default: RESIDENCE
+      default: residence
       enum:
-        - MAILING
-        - RESIDENCE
+        - mailing
+        - residence
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     W9:
       type: object
@@ -308,7 +359,7 @@ components:
         - type: object
           properties:
             dbaName:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
             otherTaxClassification:
               $ref: '#/components/schemas/OtherTaxClassification'
             exemptPayeeCode:
@@ -318,7 +369,6 @@ components:
             isNotSubjectBackupWithholding:
               $ref: '#/components/schemas/IsNotSubjectBackupWithholding'
           required:
-            - dbaName
             - isNotSubjectBackupWithholding
     W8BEN:
       type: object
@@ -352,7 +402,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/USFilerInfo'
+          US: '#/components/schemas/USFilerInfo'
       oneOf:
         - $ref: '#/components/schemas/USFilerInfo'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -375,13 +425,13 @@ components:
         - customerHashId
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         address:
           $ref: '#/components/schemas/Address'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     USFilerInfo:
       type: object
@@ -395,7 +445,7 @@ components:
             - contact
           properties:
             filerHashId:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
             tin:
               $ref: '#/components/schemas/TinDetails'
             contact:
@@ -434,7 +484,7 @@ components:
         contactNumber:
           $ref: '#/components/schemas/ContactNumberDetails'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         departmentTitle:
           $ref: '#/components/schemas/DepartmentTitle'
       description: A US filer contact information.
@@ -454,7 +504,7 @@ components:
         number:
           $ref: '#/components/schemas/ContactNumberWithoutCountryCode'
         countryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
       description: A contact number details.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     ContactNumberWithoutCountryCode:
@@ -472,18 +522,17 @@ components:
         - communicationPreference
         - addresses
         - deliveryPreference
-        - taxExempt
         - customerHashId
       type: object
       properties:
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -493,9 +542,9 @@ components:
         deliveryPreference:
           $ref: '#/components/schemas/DeliveryPreference'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     USPayerDetails:
       description: A US taxpayer details
@@ -504,7 +553,6 @@ components:
         - $ref: '#/components/schemas/BasePayerDetails'
         - required:
             - tin
-            - taxExempt
           type: object
           properties:
             tin:
@@ -526,13 +574,13 @@ components:
       type: object
       properties:
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -544,7 +592,7 @@ components:
         status:
           $ref: '#/components/schemas/UpdatePayerStatus'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     FormType:
       type: string
@@ -563,16 +611,18 @@ components:
     CommunicationPreference:
       type: string
       description: A preferred communication channel of a taxpayer.
+      default: email
       enum:
-        - PHONE
-        - EMAIL
+        - phone
+        - email
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     DeliveryPreference:
       type: string
       description: A preferred delivery channel of a taxpayer.
+      default: electronic
       enum:
-        - MAIL
-        - ELECTRONIC
+        - mail
+        - electronic
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     BirthDate:
       type: string
@@ -603,6 +653,16 @@ components:
     TinType:
       type: string
       description: Type of the TIN.
+      default: ssn
+      enum:
+        - ssn
+        - ein
+        - itin
+        - atin
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    TaxBitTaxFormTinType:
+      type: string
+      description: Type of the TIN.
       enum:
         - SSN
         - EIN
@@ -619,7 +679,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/USPayerDetails'
+          US: '#/components/schemas/USPayerDetails'
       oneOf:
         - $ref: '#/components/schemas/USPayerDetails'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -653,7 +713,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/UpdateUSPayerDetails'
+          US: '#/components/schemas/UpdateUSPayerDetails'
       oneOf:
         - $ref: '#/components/schemas/UpdateUSPayerDetails'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -663,7 +723,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/USPayerInfo'
+          US: '#/components/schemas/USPayerInfo'
       oneOf:
         - $ref: '#/components/schemas/USPayerInfo'
     BasePayerInfo:
@@ -676,20 +736,19 @@ components:
         - communicationPreference
         - addresses
         - deliveryPreference
-        - taxExempt
         - customerHashId
       type: object
       properties:
         id:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
         entityType:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         email:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -699,16 +758,15 @@ components:
         deliveryPreference:
           $ref: '#/components/schemas/DeliveryPreference'
         contactNumber:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
         customerHashId:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     USPayerInfo:
       type: object
       allOf:
         - $ref: '#/components/schemas/BasePayerInfo'
         - required:
             - tin
-            - taxExempt
           type: object
           description: A US taxpayer information.
           properties:
@@ -721,9 +779,9 @@ components:
       type: string
       description: Verification status of the TIN.
       enum:
-        - VERIFIED
-        - PENDING
-        - INVALID
+        - verified
+        - pending
+        - invalid
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TinInfo:
       type: object
@@ -739,7 +797,7 @@ components:
     PayerStatus:
       type: string
       description: A taxpayer status.
-      default: ACTIVE
+      default: active
       enum:
         - ACTIVE
         - INACTIVE
@@ -763,7 +821,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/SelectUSTaxFormRequest'
+          US: '#/components/schemas/SelectUSTaxFormRequest'
       oneOf:
         - $ref: '#/components/schemas/SelectUSTaxFormRequest'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -773,7 +831,7 @@ components:
       type: object
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     SelectUSTaxFormRequest:
       type: object
@@ -786,7 +844,7 @@ components:
           description: A US tax form selection details.
           properties:
             filerCountryCode:
-              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
             payerEntity:
               $ref: '#/components/schemas/PayerEntityDetails'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -798,10 +856,20 @@ components:
       description: A taxpayer entity details.
       properties:
         type:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
         residenceCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    FormSummaryData:
+      type: array
+      items:
+        properties:
+          description:
+            type: string
+          formType:
+            $ref: '#/components/schemas/TaxFormType'
+          recommended:
+            $ref: '#/components/schemas/RecommendedTaxForm'
     RecommendedTaxForm:
       type: boolean
       description: A recommended tax form.
@@ -809,26 +877,31 @@ components:
       type: array
       description: A list of selected tax form information.
       items:
-        allOf:
-          - $ref: '#/components/schemas/SelectTaxFormBase'
-          - type: object
-            required:
-              - taxForm
-              - description
-            description: A tax form and its information.
-            properties:
-              taxForm:
-                $ref: '#/components/schemas/TaxFormType'
-              description:
-                $ref: '#/components/schemas/TaxFormDescription'
-              recommended:
-                $ref: '#/components/schemas/RecommendedTaxForm'
-            x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+        properties:
+          taxForm:
+            $ref: '#/components/schemas/TaxFormType'
+          description:
+            $ref: '#/components/schemas/TaxFormDescription'
+          recommended:
+            $ref: '#/components/schemas/RecommendedTaxForm'
+        x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxFormDescription:
       type: string
       description: A description for a given tax form type.
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
     TaxFormType:
+      type: string
+      description: A tax form type.
+      enum:
+        - w_9
+        - w_8ben
+        - w_8ben_e
+      x-enum-varnames:
+        - w_9
+        - w_8ben
+        - w_8ben_e
+      x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+    TaxBitTaxFormType:
       type: string
       description: A tax form type.
       enum:
@@ -844,15 +917,655 @@ components:
       type: string
       description: A delete reason.
       enum:
-        - CLOSED
-        - INACTIVE
-        - FRAUDULENT
+        - closed
+        - inactive
+        - fraudulent
+      x-enum-varnames:
+        - closed
+        - inactive
+        - fraudulent
+    CursorPagination:
+      $ref: 'https://raw.githubusercontent.com/nium-global/nium-openapi/main/pagination.yaml#/components/schemas/Pagination'
+    ErrorCodes400:
+      type: string
+      description: |
+        The detailed error code associated with HTTP status 400.
+
+        * `constraint_violated_input`: The input violates the model constraints.
+        * `invalid_entity_type`: The entity type is invalid. The valid values can either be 'BUSINESS' or 'INDIVIDUAL'.
+        * `invalid_name`: The name is invalid. It must be at most 255 characters long.
+        * `invalid_email`: The email is invalid. It must be a valid email address.
+        * `invalid_tax_resident_country_code`: The tax resident country code is invalid. It must be a valid 2 letter ISO country code. Valid values are 'US'.
+        * `invalid_communication_preference`: The communication preference is invalid. The valid value is either PHONE or EMAIL.
+        * `invalid_address_type`: The address type is invalid. The valid values can either be 'MAILING' or 'RESIDENCE'.
+        * `invalid_address_line1`: The address line 1 is invalid. It must be at most 255 characters long.
+        * `invalid_address_line2`: The address line 2 is invalid. It must be at most 255 characters long.
+        * `invalid_address_city`: The address city is invalid. It must be at most 255 characters long.
+        * `invalid_address_state`: The address state is invalid. It must be a valid 2 letter ISO state code.
+        * `invalid_address_postal_code`: The address postal code is invalid. It must be at most 15 characters long and numeric.
+        * `invalid_address_country`: The address country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_delivery_preference`: The delivery preference is invalid. The valid value is either MAIL or ELECTRONIC.
+        * `invalid_tin`: The TIN is invalid. It must contain a 9-digit numeric string and a valid tin type.
+        * `invalid_tin_number`: The TIN number is invalid. It must be a 9-digit numeric string.
+        * `invalid_tin_type`: The TIN type is invalid. The valid values are SSN, EIN, ATIN, or ITIN.
+        * `invalid_tax_exempt`: The tax exempt value is invalid. It must be a boolean.
+        * `invalid_status`: The status is invalid. The valid values are active, inactive, closed, or fraudulent.
+        * `invalid_dba_name`: The DBA name is invalid. It must be at most 255 characters long.
+        * `invalid_other_tax_classification`: The other tax classification is invalid. It must be a valid string.
+        * `invalid_exempt_payee_code`: The exempt payee code is invalid. It must match the specified format.
+        * `invalid_exempt_fatca_code`: The exempt FATCA code is invalid. It must match the specified format.
+        * `invalid_is_not_subject_backup_withholding`: The backup withholding status is invalid. It must be a boolean.
+        * `invalid_date_of_birth`: The date of birth is invalid. It must be in ISO-8601 format.
+        * `invalid_reference_numbers`: The reference numbers are invalid. They must be valid strings.
+        * `invalid_country_code`: The country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_filer_country_code`: The filer country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_residence_country_code`: The residence country code is invalid. It must be a valid 2 letter ISO country code.
+        * `invalid_mailing_address`: The mailing address is invalid. It must match the specified format.
+        * `invalid_ftin`: The FTIN is invalid. It must be a valid string.
+        * `invalid_ftin_not_legally_required`: The FTIN not legally required field is invalid. It must be a boolean.
+        * `invalid_starting_after`: The starting after value is invalid. It must be a valid UUID.
+        * `invalid_starting_after_or_ending_before`: Only one of startingAfter or endingBefore can be provided.
+        * `invalid_ending_before`: The ending before value is invalid. It must be a valid UUID.
+        * `invalid_update_tax_residence_country_code`: The tax residence country code cannot be changed.
+        * `invalid_form_type`: The form type is invalid. The valid values are w_9, w_8ben, or w_8ben_e.
+        * `required_residence_address`: A RESIDENCE address is required.
+        * `invalid_tax_classification`: The tax classification is invalid. The valid values are INDIVIDUAL, C_CORPORATION, S_CORPORATION, PARTNERSHIP, TRUST_ESTATE, LLC_C, LLC_P, LLC_S, or OTHER..
+        * `invalid_delete_reason`: The delete reason is invalid. The valid values are inactive, closed, or fraudulent.
+        * `too_many_query_parameters`: Too many query parameters. Results can only be filtered by 1 field.
+        * `invalid_uuid`: The parameter is invalid. It must be a valid UUID.
+        * `invalid_boolean_value`: The input value is invalid. It must be a valid boolean of true or false.
+        * `invalid_contact_number`: The contact number is invalid. It must be at most 17 digits long and begin with a +.
+        * `invalid_customer_hash_id`: The customer hash ID is invalid. It must be a valid UUID.
+        * `invalid_filer_hash_id`: The filer hash ID is invalid. It must be a valid UUID.
+        * `invalid_has_certified`: The hasCertified field is invalid. It must be a boolean.
+        * `invalid_certifying_entity_name`: The certifying entity name does not match payer's name. It must be at most 255 characters long.
+        * `invalid_certifying_entity_time_stamp`: The certifying entity time stamp is invalid. It must be in ISO-8601 format.
+        * `invalid_payment_settlement_entity`: The payment settlement entity is invalid. It must be a valid string.
+        * `invalid_payer_entity`: The payer entity is invalid. It must contain a valid type and residence country code.
+        * `unsupported_form_type`: The tax form type is not supported. The valid values are w_9, w_8ben, or w_8ben_e.
+        * `invalid_individual_tin_type`: The tin type is invalid. For INDIVIDUAL entity type, the valid values are ITIN, SSN, or ATIN.
+        * `invalid_business_tin_type`: The tin type is invalid. For BUSINESS entity type, the valid value is EIN.
+        * `invalid_tax_classification_type`: The tax classification type does not match payer's entity type.
+      enum:
+        - constraint_violated_input
+        - invalid_entity_type
+        - invalid_name
+        - invalid_email
+        - invalid_tax_resident_country_code
+        - invalid_communication_preference
+        - invalid_address_type
+        - invalid_address_line1
+        - invalid_address_line2
+        - invalid_address_city
+        - invalid_address_state
+        - invalid_address_postal_code
+        - invalid_address_country
+        - invalid_delivery_preference
+        - invalid_birth_date
+        - invalid_tin
+        - invalid_tin_number
+        - invalid_tin_type
+        - invalid_tax_exempt
+        - invalid_status
+        - invalid_dba_name
+        - invalid_other_tax_classification
+        - invalid_exempt_payee_code
+        - invalid_exempt_fatca_code
+        - invalid_is_not_subject_backup_withholding
+        - invalid_date_of_birth
+        - invalid_reference_numbers
+        - invalid_country_code
+        - invalid_filer_country_code
+        - invalid_residence_country_code
+        - invalid_mailing_address
+        - invalid_ftin
+        - invalid_ftin_not_legally_required
+        - invalid_starting_after
+        - invalid_starting_after_or_ending_before
+        - invalid_update_tax_residence_country_code
+        - invalid_ending_before
+        - invalid_form_type
+        - invalid_tax_classification
+        - invalid_delete_reason
+        - required_residence_address
+        - too_many_query_parameters
+        - invalid_uuid
+        - invalid_boolean_value
+        - invalid_contact_number
+        - invalid_customer_hash_id
+        - invalid_filer_hash_id
+        - invalid_has_certified
+        - invalid_certifying_entity_name
+        - invalid_certifying_entity_timestamp
+        - invalid_payment_settlement_entity
+        - invalid_payer_entity
+        - unsupported_form_type
+        - invalid_individual_tin_type
+        - invalid_business_tin_type
+        - invalid_tax_classification_type
+    ErrorCodes404:
+      type: string
+      description: |
+        The detailed error code associated with HTTP status 404.
+
+        * `payer_not_found`: The payer resource not found.
+        * `filer_not_found`: The filer resource not found.
+        * `form_not_found`: The form resource not found.
+        * `client_not_found`: The client resource not found.
+        * `customer_not_found`: The customer resource not found.
+        * `starting_cursor_not_found`: The starting cursor not found.
+        * `ending_cursor_not_found`: The ending cursor not found.
+      enum:
+        - payer_not_found
+        - filer_not_found
+        - form_not_found
+        - client_not_found
+        - customer_not_found
+        - starting_cursor_not_found
+        - ending_cursor_not_found
+    ErrorCodes500:
+      type: string
+      description: |
+        The detailed error code associated with HTTP status 500.
+
+        * `dependency_error`: Error happens when the service calls its dependencies.
+        * `uncategorized_error`: Service errors not categorized.
+        * `internal_error`: An internal error occurred.
+      enum:
+        - dependency_error
+        - uncategorized_error
+        - internal_error
+    ErrorDetailBase:
+      $ref: 'https://raw.githubusercontent.com/nium-global/unified-errors/main/version/1.0.0/unified-errors-1.0.0.yaml#/components/schemas/Error'
+    ErrorDetail400:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorDetailBase'
+    ErrorDetail401:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/nium-global/unified-errors/main/version/1.0.0/unified-errors-1.0.0.yaml#/components/schemas/Standard401Error'
+    ErrorDetail404:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorDetailBase'
+    ErrorDetail500:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorDetailBase'
+    ErrorResponse400:
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail400'
+    ErrorResponse401:
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail401'
+    ErrorResponse404:
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail404'
+    ErrorResponse500:
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail500'
+    ProductServiceClientDetails:
+      type: object
+      properties:
+        clientCode:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        regulatoryRegion:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        countryCode:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+    CustomerServiceCustomerDetails:
+      type: object
+      properties:
+        customerHashId:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        regulatoryRegion:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        kycStatus:
+          $ref: '#/components/schemas/CustomerStatus'
+        clientId:
+          type: string
+    CustomerStatus:
+      type: string
+      enum:
+        - Pending
+        - Clear
+        - Failed
+        - Suspended
+        - Blocked
+    PlatformErrorResponse:
+      required:
+        - code
+        - errors
+        - message
+        - status
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+    CustomerServiceErrorResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PlatformErrorResponse'
+    ProductServiceErrorResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PlatformErrorResponse'
+    TaxBitServiceErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    TaxBitCreateAccountOwnerRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TaxBitAccountOwnerDetails'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/TaxBitAccountDetails'
+    TaxBitUpdateAccountOwnerRequest:
+      type: object
+      properties:
+        account_owner_type:
+          $ref: '#/components/schemas/TaxBitAccountOwnerType'
+        name:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        email:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+        tin:
+          $ref: '#/components/schemas/Tin'
+        tin_type:
+          $ref: '#/components/schemas/TaxBitTinType'
+        tax_country_code:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        address:
+          $ref: '#/components/schemas/TaxBitAddressDetails'
+        prefers_physical_mail:
+          type: boolean
+        is_tax_exempt:
+          type: boolean
+    TaxBitTinType:
+      type: string
+      enum:
+        - US_SSN
+        - US_EIN
+        - US_ATIN
+        - US_ITIN
+        - OTHER
+    TaxBitAccountOwnerDetails:
+      type: object
+      required:
+        - id
+        - account_owner_type
+        - name
+        - email
+        - tin
+        - tin_type
+        - tax_country_code
+        - address
+        - prefers_physical_mail
+        - is_tax_exempt
+      properties:
+        id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        account_owner_type:
+          $ref: '#/components/schemas/TaxBitAccountOwnerType'
+        name:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        email:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
+        tin:
+          $ref: '#/components/schemas/Tin'
+        tin_type:
+          $ref: '#/components/schemas/TaxBitTinType'
+        tax_country_code:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        address:
+          $ref: '#/components/schemas/TaxBitAddressDetails'
+        prefers_physical_mail:
+          type: boolean
+        is_tax_exempt:
+          type: boolean
+    TaxBitAccountOwnerType:
+      type: string
+      enum:
+        - INDIVIDUAL
+        - ENTITY
+    TaxBitAddressDetails:
+      type: object
+      required:
+        - first_line
+        - city
+        - state_or_province
+        - country
+        - postal_code
+      properties:
+        first_line:
+          type: string
+        second_line:
+          type: string
+        city:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressCity'
+        state_or_province:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/AddressState'
+        country:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+        postal_code:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/PostalCode'
+    TaxBitAccountDetails:
+      type: object
+      required:
+        - id
+        - payer_id
+        - disposition_method
+      properties:
+        id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        payer_id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        disposition_method:
+          $ref: '#/components/schemas/DispositionMethod'
+    TaxBitGenerateFormResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TaxBitGenerateFormResponseData'
+    TaxBitGenerateFormResponseData:
+      type: object
+      properties:
+        id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        type:
+          type: string
+        status:
+          $ref: '#/components/schemas/TaxBitFormStatus'
+        signature_timestamp:
+          type: string
+        url:
+          type: string
+    TaxBitFormResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TaxBitFormResponseData'
+    TaxBitFormStatus:
+      type: string
+      enum:
+        - PROCESSING
+        - FINISHED
+        - ERROR
+    TaxBitFormResponseData:
+      discriminator:
+        propertyName: document_type
+        mapping:
+          W-8BENE: '#/components/schemas/TaxBitW8BeneTaxFormResponse'
+          W-8BEN: '#/components/schemas/TaxBitW8BenTaxFormResponse'
+          W-9: '#/components/schemas/TaxBitW9TaxFormResponse'
+      oneOf:
+        - $ref: '#/components/schemas/TaxBitW8BeneTaxFormResponse'
+        - $ref: '#/components/schemas/TaxBitW8BenTaxFormResponse'
+        - $ref: '#/components/schemas/TaxBitW9TaxFormResponse'
+      required:
+        - document_type
+    TaxBitBaseTaxFormResponse:
+      type: object
+      properties:
+        id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        download_id:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+        status:
+          $ref: '#/components/schemas/TaxBitFormStatus'
+        document_type:
+          type: string
+        url:
+          type: string
+        name:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        tax_classification:
+          $ref: '#/components/schemas/TaxBitTaxClassification'
+        tin:
+          $ref: '#/components/schemas/Tin'
+        has_certified:
+          type: boolean
+        signature:
+          type: string
+        signature_timestamp:
+          type: string
+    TaxBitW8BeneTaxFormResponse:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitBaseTaxFormResponse'
+        - type: object
+          properties:
+            permanent_address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+            mailing_address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+            ftin:
+              type: string
+            ftin_not_legally_required:
+              type: boolean
+            country:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+            reference_numbers:
+              type: string
+    TaxBitW8BenTaxFormResponse:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitW8BeneTaxFormResponse'
+        - type: object
+          properties:
+            date_of_birth:
+              $ref: '#/components/schemas/BirthDate'
+    TaxBitW9TaxFormResponse:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitBaseTaxFormResponse'
+        - type: object
+          properties:
+            dba_name:
+              type: string
+            other_tax_classification:
+              type: string
+            tin_type:
+              $ref: '#/components/schemas/TaxBitTaxFormTinType'
+            exempt_payee_code:
+              type: string
+            exempt_fatca_code:
+              type: string
+            is_not_subject_backup_withholding:
+              type: boolean
+            address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+    TaxBitFormRequest:
+      discriminator:
+        propertyName: document_type
+        mapping:
+          W-8BENE: '#/components/schemas/TaxBitW8BeneTaxFormRequest'
+          W-8BEN: '#/components/schemas/TaxBitW8BenTaxFormRequest'
+          W-9: '#/components/schemas/TaxBitW9TaxFormRequest'
+      oneOf:
+        - $ref: '#/components/schemas/TaxBitW8BeneTaxFormRequest'
+        - $ref: '#/components/schemas/TaxBitW8BenTaxFormRequest'
+        - $ref: '#/components/schemas/TaxBitW9TaxFormRequest'
+      required:
+        - Form_type
+    TaxBitBaseTaxFormRequest:
+      type: object
+      properties:
+        document_type:
+          type: string
+        name:
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
+        tax_classification:
+          $ref: '#/components/schemas/TaxBitTaxClassification'
+        tin:
+          $ref: '#/components/schemas/Tin'
+        has_certified:
+          type: boolean
+        signature:
+          type: string
+        signature_timestamp:
+          type: string
+    TaxBitW8BeneTaxFormRequest:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitBaseTaxFormRequest'
+        - type: object
+          properties:
+            permanent_address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+            mailing_address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+            ftin:
+              type: string
+            ftin_not_legally_required:
+              type: boolean
+            country:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
+            reference_numbers:
+              type: string
+    TaxBitW8BenTaxFormRequest:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitW8BeneTaxFormRequest'
+        - type: object
+          properties:
+            date_of_birth:
+              $ref: '#/components/schemas/BirthDate'
+    TaxBitW9TaxFormRequest:
+      allOf:
+        - $ref: '#/components/schemas/TaxBitBaseTaxFormRequest'
+        - type: object
+          properties:
+            dba_name:
+              type: string
+            other_tax_classification:
+              type: string
+            tin_type:
+              $ref: '#/components/schemas/TaxBitTaxFormTinType'
+            exempt_payee_code:
+              $ref: '#/components/schemas/ExemptPayeeCode'
+            exempt_fatca_code:
+              $ref: '#/components/schemas/TaxBitExemptFatcaCode'
+            is_not_subject_backup_withholding:
+              type: boolean
+            address:
+              $ref: '#/components/schemas/TaxBitAddressDetails'
+    DispositionMethod:
+      type: string
+      enum:
+        - HIFO
+        - FIFO
+    TaxBitAccountOwnerInfoResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TaxBitAccountOwnerInfo'
+    TaxBitAccountOwnerInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TaxBitAccountOwnerDetails'
+        - type: object
+          properties:
+            taxbit_id:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+            tenant_id:
+              type: string
+            date_created:
+              type: string
+    TaxBitAccountOwnerAndAccountInfoResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TaxBitAccountOwnerAndAccountInfo'
+    TaxBitAccountOwnerAndAccountInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TaxBitAccountOwnerInfo'
+        - type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/TaxBitAccountInfo'
+    TaxBitAccountInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TaxBitAccountDetails'
+        - type: object
+          properties:
+            taxbit_id:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+            tenant_id:
+              type: string
+            data_created:
+              type: string
+            date_modified:
+              type: string
+            account_owner_id:
+              $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
+    TaxBitTinValidationStatusRequest:
+      type: object
+      properties:
+        legal_name:
+          type: string
+        tin:
+          type: string
+    TaxBitTinValidationStatusResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: UUID
+        legal_name:
+          type: string
+        tin:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - VALID_SSN_MATCH
+            - VALID_EIN_MATCH
+            - VALID_SSN_EIN_MATCH
+            - MISMATCH
+            - TIN_NOT_ISSUED
+        validation_date:
+          type: string
     FilerData:
       type: object
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/USFilerData'
+          US: '#/components/schemas/USFilerData'
       oneOf:
         - $ref: '#/components/schemas/USFilerData'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -864,9 +1577,9 @@ components:
         - address
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         name:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
         address:
           $ref: '#/components/schemas/Address'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -917,7 +1630,7 @@ components:
       discriminator:
         propertyName: taxResidentCountryCode
         mapping:
-          us: '#/components/schemas/USPayerData'
+          US: '#/components/schemas/USPayerData'
       oneOf:
         - $ref: '#/components/schemas/USPayerData'
       x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
@@ -927,11 +1640,10 @@ components:
         - communicationPreference
         - addresses
         - deliveryPreference
-        - taxExempt
       type: object
       properties:
         taxResidentCountryCode:
-          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+          $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
         communicationPreference:
           $ref: '#/components/schemas/CommunicationPreference'
         addresses:
@@ -945,162 +1657,15 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/BasePayerData'
-        - required:
-            - taxExempt
-          type: object
+        - type: object
           properties:
             tinType:
               $ref: '#/components/schemas/TinType'
             taxExempt:
               $ref: '#/components/schemas/TaxExempt'
           x-field-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-    CursorPagination:
-      $ref: 'https://raw.githubusercontent.com/nium-global/nium-openapi/main/pagination.yaml#/components/schemas/Pagination'
-    ErrorCodes400:
-      type: string
-      description: |
-        The detailed error code associated with HTTP status 400.
-
-        * `constraint_violated_input`: The input violates the model constraints.
-        * `invalid_entity_type`: The entity type is invalid. The valid values can either be 'BUSINESS' or 'INDIVIDUAL'.
-        * `invalid_name`: The name is invalid. It must be at most 255 characters long.
-        * `invalid_email`: The email is invalid. It must be a valid email address.
-        * `invalid_tax_residence_country_code`: The tax country code is invalid. It must be a valid 2 letter ISO country code. Valid values are 'US'.
-        * `invalid_communication_preference`: The communication preference is invalid. The valid value is either PHONE or EMAIL.
-        * `invalid_address_type`: The address type is invalid. The valid values can either be 'MAILING' or 'RESIDENCE'.
-        * `invalid_address_line1`: The address line 1 is invalid. It must be at most 255 characters long.
-        * `invalid_address_line2`: The address line 2 is invalid. It must be at most 255 characters long.
-        * `invalid_address_city`: The address city is invalid. It must be at most 255 characters long.
-        * `invalid_address_state`: The address state is invalid. It must be a valid state or region code.
-        * `invalid_address_postal_code`: The address postal code is invalid. It must be at most 15 characters long and numeric.
-        * `invalid_address_country`: The address country code is invalid. It must be a valid 2 letter ISO country code.
-        * `invalid_delivery_preference`: The delivery preference is invalid. The valid value is either MAIL or ELECTRONIC.
-        * `invalid_tin`: The TIN is invalid. It must contain a 9-digit numeric string and a valid tin type.
-        * `invalid_tin_number`: The TIN number is invalid. It must be a 9-digit numeric string.
-        * `invalid_tin_type`: The TIN type is invalid. The valid values are SSN, EIN, or ITIN.
-        * `invalid_account_type`: The account type is invalid. The valid values are INDIVIDUAL, JOINT, CORPORATE, TRUST, PARTNERSHIP, or OTHER.
-        * `invalid_tax_exempt`: The tax exempt value is invalid. It must be a boolean.
-        * `invalid_status`: The status is invalid. The valid values are ACTIVE, INACTIVE, CLOSED, or FRAUDULENT.
-        * `invalid_dba_name`: The DBA name is invalid. It must be at most 255 characters long.
-        * `invalid_other_tax_classification`: The other tax classification is invalid. It must be a valid string.
-        * `invalid_exempt_payee_code`: The exempt payee code is invalid. It must match the specified format.
-        * `invalid_exempt_fatca_code`: The exempt FATCA code is invalid. It must match the specified format.
-        * `invalid_is_not_subject_backup_withholding`: The backup withholding status is invalid. It must be a boolean.
-        * `invalid_date_of_birth`: The date of birth is invalid. It must be in ISO-8601 format.
-        * `invalid_reference_numbers`: The reference numbers are invalid. They must be valid strings.
-        * `invalid_country_code`: The country code is invalid. It must be a valid 2 letter ISO country code.
-        * `invalid_filer_country_code`: The filer country code is invalid. It must be a valid 2 letter ISO country code.
-        * `invalid_residence_country_code`: The residence country code is invalid. It must be a valid 2 letter ISO country code.
-        * `invalid_mailing_address`: The mailing address is invalid. It must match the specified format.
-        * `invalid_ftin`: The FTIN is invalid. It must be a valid string.
-        * `invalid_ftin_not_legally_required`: The FTIN not legally required field is invalid. It must be a boolean.
-        * `invalid_starting_after`: The starting after value is invalid. It must be a valid UUID.
-        * `invalid_starting_after_or_ending_before`: Only one of startingAfter or endingBefore can be provided.
-        * `invalid_ending_before`: The ending before value is invalid. It must be a valid UUID.
-        * `invalid_update_tax_residence_country_code`: The tax residence country code cannot be changed.
-        * `invalid_form_type`: The form type is invalid. The valid values are W-9, W-8BEN, or W-8BEN-E.
-        * `required_residence_address`: A RESIDENCE address is required.
-        * `invalid_tax_classification`: The tax classification is invalid. The valid values are INDIVIDUAL, CORPORATION, PARTNERSHIP, TRUST, or OTHER.
-        * `invalid_delete_reason`: The delete reason is invalid. The valid values are CLOSED, INACTIVE, or FRAUDULENT.
-        * `too_many_query_parameters`: Too many query parameters. Results can only be filtered by 1 field.
-        * `invalid_uuid`: The parameter is invalid. It must be a valid UUID.
-        * `invalid_boolean_value`: The input value is invalid. It must be a valid boolean of true or false.
-        * `invalid_contact_number`: The contact number is invalid. It must be at most 17 digits long and begin with a +.
-        * `invalid_customer_hash_id`: The customer hash ID is invalid. It must be a valid UUID.
-        * `invalid_filer_hash_id`: The filer hash ID is invalid. It must be a valid UUID.
-        * `invalid_has_certified`: The hasCertified field is invalid. It must be a boolean.
-        * `invalid_certifying_entity_name`: The certifying entity name does not match payer's name. It must be at most 255 characters long.
-        * `invalid_certifying_entity_time_stamp`: The certifying entity time stamp is invalid. It must be in ISO-8601 format.
-        * `invalid_payment_settlement_entity`: The payment settlement entity is invalid. It must be a valid string.
-        * `invalid_payer_entity`: The payer entity is invalid. It must contain a valid type and residence country code.
-        * `unsupported_form_type`: The tax form type is not supported. The valid values are W-9, W-8BEN, or W-8BEN-E
-      enum:
-        - constraint_violated_input
-        - invalid_entity_type
-        - invalid_name
-        - invalid_email
-        - invalid_tax_residence_country_code
-        - invalid_communication_preference
-        - invalid_address_type
-        - invalid_address_line1
-        - invalid_address_line2
-        - invalid_address_city
-        - invalid_address_state
-        - invalid_address_postal_code
-        - invalid_address_country
-        - invalid_delivery_preference
-        - invalid_birth_date
-        - invalid_tin
-        - invalid_tin_number
-        - invalid_tin_type
-        - invalid_account_type
-        - invalid_tax_exempt
-        - invalid_status
-        - invalid_dba_name
-        - invalid_other_tax_classification
-        - invalid_exempt_payee_code
-        - invalid_exempt_fatca_code
-        - invalid_is_not_subject_backup_withholding
-        - invalid_date_of_birth
-        - invalid_reference_numbers
-        - invalid_country_code
-        - invalid_filer_country_code
-        - invalid_residence_country_code
-        - invalid_mailing_address
-        - invalid_ftin
-        - invalid_ftin_not_legally_required
-        - invalid_starting_after
-        - invalid_starting_after_or_ending_before
-        - invalid_update_tax_residence_country_code
-        - invalid_ending_before
-        - invalid_form_type
-        - invalid_tax_classification
-        - invalid_delete_reason
-        - required_residence_address
-        - too_many_query_parameters
-        - invalid_uuid
-        - invalid_boolean_value
-        - invalid_contact_number
-        - invalid_customer_hash_id
-        - invalid_filer_hash_id
-        - invalid_has_certified
-        - invalid_certifying_entity_name
-        - invalid_certifying_entity_timestamp
-        - invalid_payment_settlement_entity
-        - invalid_payer_entity
-        - unsupported_form_type
-    ErrorCodes404:
-      type: string
-      description: |
-        The detailed error code associated with HTTP status 404.
-
-        * `payer_not_found`: The payer resource not found.
-        * `filer_not_found`: The filer resource not found.
-        * `form_not_found`: The form resource not found.
-        * `client_not_found`: The client resource not found.
-        * `customer_not_found`: The customer resource not found.
-        * `starting_cursor_not_found`: The starting cursor not found.
-        * `ending_cursor_not_found`: The ending cursor not found.
-      enum:
-        - payer_not_found
-        - filer_not_found
-        - form_not_found
-        - client_not_found
-        - customer_not_found
-        - starting_cursor_not_found
-        - ending_cursor_not_found
-    ErrorCodes500:
-      type: string
-      description: |
-        The detailed error code associated with HTTP status 500.
-
-        * `dependency_error`: Error happens when the service calls its dependencies.
-        * `uncategorized_error`: Service errors not categorized.
-        * `internal_error`: An internal error occurred.
-      enum:
-        - dependency_error
-        - uncategorized_error
-        - internal_error
+    N1StandardErrorResponse:
+      $ref: 'https://raw.githubusercontent.com/nium-global/unified-errors/main/version/1.0.0/unified-errors-1.0.0.yaml#/components/schemas/ErrorResponse'
   parameters:
     taxResidentCountryCode:
       name: payerResidentCountryCode
@@ -1108,21 +1673,21 @@ components:
       required: true
       description: The tax resident country code.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
     filerCountryCode:
       name: filerCountryCode
       in: query
       required: true
       description: The filer country code.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CountryCode'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CountryCode'
     payerEntityType:
       name: entityType
       in: query
       required: false
       description: The entity type of the payer.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/beneficiaries.yaml#/components/schemas/EntityType'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/beneficiaries.yaml#/components/schemas/EntityType'
     UnmaskData:
       name: unmaskData
       in: query
@@ -1136,7 +1701,7 @@ components:
       in: path
       required: true
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
       description: Unique identifier of the tax Form.
     ClientHashId:
       name: clientHashId
@@ -1144,14 +1709,14 @@ components:
       required: true
       description: Unique identifier of the client.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     PayerHashId:
       name: payerHashId
       in: path
       required: true
       description: Unique identifier of the taxpayer.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     XRequestId:
       $ref: https://raw.githubusercontent.com/nium-global/nium-openapi/main/core.yaml#/components/parameters/XRequestId
     StartingAfter:
@@ -1163,31 +1728,31 @@ components:
       in: query
       description: Search taxpayers by name.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Name'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Name'
     QueryByEmail:
       name: email
       in: query
       description: Search taxpayers by email.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/Email'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/Email'
     QueryByContactNumber:
       name: contactNumber
       in: query
       description: Search taxpayers by contact number.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/ContactNumber'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/ContactNumber'
     QueryByClientHashId:
       name: clientHashId
       in: query
       description: Search by client hash id.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     QueryByCustomerHashId:
       name: customerHashId
       in: query
       description: Search by customer hash id.
       schema:
-        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/dev/core.yaml#/components/schemas/CoreApiHashId'
+        $ref: 'https://raw.githubusercontent.com/nium-global/nium-n1-beneficiary-service/main/core.yaml#/components/schemas/CoreApiHashId'
     Reason:
       name: reason
       in: query
