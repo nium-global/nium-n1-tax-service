@@ -526,6 +526,7 @@ components:
               $ref: '#/components/schemas/W8BenTaxClassification'
           required:
             - dateOfBirth
+            - ftinNotLegallyRequired
             - taxClassification
     W8BENE:
       type: object
@@ -544,7 +545,6 @@ components:
             taxClassification:
               $ref: '#/components/schemas/W8BeneTaxClassification'
           required:
-            - referenceNumbers
             - ftinNotLegallyRequired
             - taxClassification
     FilerInfo:
